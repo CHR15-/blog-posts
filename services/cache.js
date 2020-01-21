@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const redis = require('redis');
 const util = require('util');
+const keys = require('../config/keys');
 
 const client = redis.createClient(keys.redisUrl);
 client.hget = util.promisify(client.hget);
 const exec = mongoose.Query.prototype.exec;
-const keys = require('../config/keys');
 
 mongoose.Query.prototype.cache = function(options = {}) {
   this.useCache = true;
